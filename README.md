@@ -41,33 +41,25 @@ GoFleet is a **Uber-style ride-sharing application backend** implemented using *
 
 ## Architecture
 
-+-------------------+
-\| API Gateway |
-+-------------------+
-|
-v
-+-------------------+ +-------------------+
-\| User Service |<--->| Driver Service |
-+-------------------+ +-------------------+
-|
-v
-+-------------------+
-\| Ride Service |
-+-------------------+
-|
-v
-+-------------------+
-\| Payment Service |
-+-------------------+
+```mermaid
+flowchart TD
+    API[API Gateway] -->|Routes requests| User[User Service]
+    API -->|Routes requests| Driver[Driver Service]
+    User <--> Driver
+    User --> Ride[Ride Service]
+    Ride --> Payment[Payment Service]
+
 
 ```
+
 - Each microservice runs independently and communicates via REST/gRPC.
 - Services are containerized using Docker and deployed on Kubernetes.
 - Scalable architecture allows horizontal scaling of each service.
 
 ---
 
-Technologies Used
+## Technologies Used
+
 - Language: Go (Golang)
 - Containerization: Docker
 - Orchestration: Kubernetes
@@ -75,29 +67,35 @@ Technologies Used
 - Database: PostgreSQL / MongoDB
 - Message Queue: RabbitMQ
 - Monitoring: Prometheus / Jaegar
-- Version Control:** Git & GitHub
+- Version Control: Git & GitHub
 
 ---
 
 Getting Started
 
 Prerequisites
+
 - Go 1.21+
 - Docker
 - Kubernetes (Minikube or k8s cluster)
 - Git
 
 Installation
+
 # Clone the repository
+
 git clone https://github.com/michael-emmanuel/go-fleet.git
 cd go-fleet
 
 # Build Docker images
+
 docker-compose build
 
 # Start services locally
+
 docker-compose up
-```
+
+````
 
 ---
 
@@ -107,7 +105,7 @@ docker-compose up
 
 ```bash
 kubectl apply -f k8s/
-```
+````
 
 2. Check pods and services:
 
