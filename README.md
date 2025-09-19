@@ -39,7 +39,7 @@ GoFleet is a **Uber-style ride-sharing application backend** implemented using *
 
 ---
 
-## Architecture
+## Architecture (Starter)
 
 ```mermaid
 sequenceDiagram
