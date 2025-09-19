@@ -42,14 +42,24 @@ GoFleet is a **Uber-style ride-sharing application backend** implemented using *
 ## Architecture
 
 ```mermaid
-flowchart TD
-    API[API Gateway] -->|Routes requests| User[User Service]
-    API -->|Routes requests| Driver[Driver Service]
-    User <--> Driver
-    User --> Ride[Ride Service]
-    Ride --> Payment[Payment Service]
+sequenceDiagram
+  participant User
+  participant TripService
+  participant DriverService
+  participant Driver
 
+  User->>TripService: Create Trip Request
+  TripService-->>+DriverService: trip.event.created
+  Note right of TripService: Event: Something happened
 
+  DriverService->>Driver: driver.cmd.trip_request
+  Note right of DriverService: Command: Please do this
+
+  Driver-->>DriverService: driver.cmd.trip_accept
+  Note left of Driver: Command: Response
+
+  DriverService-->>-TripService: trip.event.driver_assigned
+  Note left of DriverService: event: Something happened
 ```
 
 - Each microservice runs independently and communicates via REST/gRPC.
@@ -60,13 +70,17 @@ flowchart TD
 
 ## Technologies Used
 
-- Language: Go (Golang)
+- Language: Go (Golang), TypeScript
+- Cloud: Google Clould Platform (GCP)
 - Containerization: Docker
 - Orchestration: Kubernetes
 - API Communication: REST, gRPC
 - Database: PostgreSQL / MongoDB
 - Message Queue: RabbitMQ
-- Monitoring: Prometheus / Jaegar
+- Monitoring: Prometheus
+- Tracing and Observability: Jaegar
+- Mapping and Routing: Open Source Routing Machine (OSRM)
+- Payments: Stripe
 - Version Control: Git & GitHub
 
 ---
